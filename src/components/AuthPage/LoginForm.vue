@@ -4,6 +4,7 @@
       <h3 class="text-2xl mb-3">Log in</h3>
       <p class="text-gray-600 font-light">Welcome back, please log in!</p>
     </div>
+    <span class="text-red-500" v-if="errorMessage">{{ errorMessage }}</span>
     <ValidationObserver v-slot="{ handleSubmit, invalid }">
       <form @submit.prevent="handleSubmit(onSubmit)">
         <div class="mb-3">
@@ -25,7 +26,7 @@
         <div>
           <ValidationProvider
             name="password"
-            rules="required|min:6"
+            rules="required|passwordRequired"
             v-slot="{ errors }"
           >
             <AuthInput
@@ -69,6 +70,7 @@ export default {
   data() {
     return {
       formData: { username: "", password: "" },
+      errorMessage: "",
     };
   },
   components: {
@@ -82,10 +84,15 @@ export default {
             username: this.formData.username,
             password: this.formData.password,
           })
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
+          .then((res) => {
+            alert(res.message);
+            this.$router.go(-1);
+          })
+          .catch((err) => {
+            this.errorMessage = err.message;
+          });
       } catch (error) {
-        console.log(error);
+        this.errorMessage = "Error! Could not reach the API";
       }
     },
   },

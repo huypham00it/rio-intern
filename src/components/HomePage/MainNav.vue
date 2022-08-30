@@ -24,12 +24,9 @@
         </nav>
 
         <div class="flex h-full items-center ml-auto">
-          <action-button
-            v-if="!isLoggedIn"
-            data-test="login-button"
-            text="Sign in"
-            @click="handleLogin()"
-          />
+          <router-link v-if="!isLoggedIn" to="/auth/login">
+            <action-button data-test="login-button" text="Sign in" />
+          </router-link>
           <profile-image v-else data-test="profile-image"></profile-image>
         </div>
       </div>

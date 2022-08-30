@@ -6,6 +6,7 @@
         Complete the following information to create a new account.
       </p>
     </div>
+    <span class="text-red-500" v-if="errorMessage">{{ errorMessage }}</span>
     <ValidationObserver v-slot="{ handleSubmit, invalid, untouched }">
       <form @submit.prevent="handleSubmit(onSubmit)">
         <div class="mb-3">
@@ -78,7 +79,7 @@
         <div>
           <ValidationProvider
             name="password"
-            rules="required|min:6"
+            rules="required|passwordRequired"
             v-slot="{ errors }"
           >
             <AuthInput
@@ -94,11 +95,11 @@
         <div>
           <ValidationProvider
             name="confirmPassword"
-            rules="required"
+            rules="required|passwordRequired"
             v-slot="{ errors }"
           >
             <AuthInput
-              v-model="formData.confirmPassword"
+              v-model="confirmPassword"
               type="password"
               name="Confirm Password"
               placeholder="Confirm Password"
@@ -144,8 +145,9 @@ export default {
         username: "",
         email: "",
         password: "",
-        confirmPassword: "",
       },
+      confirmPassword: "",
+      errorMessage: "",
     };
   },
   components: {
@@ -154,6 +156,17 @@ export default {
   methods: {
     onSubmit() {
       console.log(this.formData);
+    },
+  },
+  watch: {
+    confirmPassword(value) {
+      if (value != this.formData.password) {
+        console.log(this.formData.password);
+        this.errorMessage = "Password doesn't match";
+      }
+    },
+    formData() {
+      console.log("test");
     },
   },
 };

@@ -18,14 +18,15 @@ authFetch.interceptors.request.use(
 authFetch.interceptors.response.use(
   (response) => {
     console.log("got response");
-    return response;
+    console.log(response);
+    return response.data;
   },
   (error) => {
     console.log(error.response);
     if (error.response.status === 404) {
       console.log("NOT FOUND");
     }
-    return Promise.reject(error);
+    return Promise.reject(error.response.data);
   }
 );
 

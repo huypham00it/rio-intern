@@ -10,6 +10,7 @@ import App from "./App.vue";
 import routes from "./routes";
 import "./assets/tailwind.css";
 import "./validations/vee-validate";
+import store from "./store";
 
 Vue.use(VueRouter);
 Vue.use(VueCarousel);
@@ -36,5 +37,6 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
+  store,
   render: (h) => h(App),
 }).$mount("#app");
