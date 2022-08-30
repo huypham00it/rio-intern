@@ -61,7 +61,7 @@
   </div>
 </template>
 <script>
-import AuthInput from "@/components/shared/AuthInput.vue";
+import { AuthInput } from "@/components/Shared";
 import authFetch from "@/services/axios/interceptors";
 
 export default {

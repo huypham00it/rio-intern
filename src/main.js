@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import VueCarousel from "vue-carousel";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 
 import App from "./App.vue";
@@ -16,7 +16,7 @@ Vue.use(VueCarousel);
 Vue.component("ValidationProvider", ValidationProvider);
 Vue.component("ValidationObserver", ValidationObserver);
 
-library.add(faAngleLeft, faAngleRight);
+library.add(faSearch);
 
 const router = new VueRouter({
   routes,

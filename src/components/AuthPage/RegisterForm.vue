@@ -132,7 +132,7 @@
   </div>
 </template>
 <script>
-import AuthInput from "@/components/shared/AuthInput.vue";
+import { AuthInput } from "@/components/Shared";
 
 export default {
   name: "RegisterForm",

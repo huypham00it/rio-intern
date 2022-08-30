@@ -11,3 +11,4 @@ export { default as Login1 } from "@/assets/login_1.png";
 export { default as Login2 } from "@/assets/login_2.png";
 export { default as Login3 } from "@/assets/login_3.png";
 export { default as Login4 } from "@/assets/login_4.png";
+export { default as Avatar } from "@/assets/avatar.png";
