@@ -13,7 +13,7 @@
         />
       </div>
       <span
-        class="flex items-center h-full px-3 border-l border-r border-brand-gray-3 bg-brand-gray-2"
+        class="flex items-center h-full px-3 border-l border-r border-brand-gray-3"
         >in</span
       >
       <div class="relative pl-3 flex-1">

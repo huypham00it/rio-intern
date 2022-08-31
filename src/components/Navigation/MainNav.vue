@@ -4,9 +4,9 @@
       <div
         class="flex flex-nowrap h-full px-8 mx-auto border-b border-solid border-brand-gray-1"
       >
-        <a :href="url" class="flex items-center h-full text-xl">{{
-          company
-        }}</a>
+        <router-link to="/">
+          <a class="flex items-center h-full text-xl">{{ company }}</a>
+        </router-link>
 
         <nav class="h-full ml-12">
           <ul class="flex h-full p-0 m-0 list-none">
@@ -27,7 +27,19 @@
           <router-link v-if="!isLoggedIn" to="/auth/login">
             <action-button data-test="login-button" text="Sign in" />
           </router-link>
-          <profile-image v-else data-test="profile-image"></profile-image>
+          <div v-else class="relative user-avatar">
+            <profile-image data-test="profile-image"></profile-image>
+            <div
+              class="absolute right-0 top-100 rounded-md py-3 bg-brand-gray-1 w-32 hidden"
+            >
+              <button
+                class="px-3 hover:bg-brand-gray-2 w-full text-left"
+                @click="logout"
+              >
+                Log out
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -39,6 +51,7 @@
 import { ActionButton } from "@/components/Shared";
 import ProfileImage from "./ProfileImage.vue";
 import SubNav from "./SubNav.vue";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "MainNav",
@@ -46,7 +59,6 @@ export default {
   data() {
     return {
       company: "Rio Fintech",
-      url: "https://riofintech.vn",
       navItems: [
         "Teams",
         "Locations",
@@ -55,18 +67,22 @@ export default {
         "Students",
         "Jobs",
       ],
-      isLoggedIn: false,
     };
   },
   computed: {
+    ...mapGetters(["isLoggedIn"]),
     headerHeightClass() {
       return this.isLoggedIn ? "h-32" : "h-16";
     },
   },
   methods: {
-    handleLogin() {
-      this.isLoggedIn = true;
-    },
+    ...mapActions(["logout"]),
   },
 };
 </script>
+
+<style scoped>
+.user-avatar:hover > div {
+  display: block;
+}
+</style>

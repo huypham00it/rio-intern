@@ -10,6 +10,7 @@
 </template>
 <script>
 import { AuthLeft } from "@/components/AuthPage";
+
 export default {
   name: "AuthPage",
   components: {

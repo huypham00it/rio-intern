@@ -1,9 +1,10 @@
-import { AuthPage, HomePage } from "@/pages";
+import { AuthPage, HomePage, NotiPage, JobResult } from "@/pages";
 import { LoginForm, RegisterForm } from "@/components/AuthPage";
 
 const routes = [
   {
-    path: "",
+    path: "/",
+    name: "home",
     component: HomePage,
   },
   {
@@ -23,6 +24,10 @@ const routes = [
     ],
   },
   {
+    path: "/jobs/results",
+    component: JobResult,
+  },
+  {
     path: "/dashboard",
     component: { template: "<h1>Dashboard</h1>" },
     meta: { title: "Dashboard" },
@@ -34,7 +39,7 @@ const routes = [
   },
   {
     path: "/notices",
-    component: { template: "<h1>Notices</h1>" },
+    component: NotiPage,
     meta: { title: "Notices" },
   },
   {

@@ -64,6 +64,7 @@
 <script>
 import { AuthInput } from "@/components/Shared";
 import authFetch from "@/services/axios/interceptors";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "RegisterForm",
@@ -73,28 +74,46 @@ export default {
       errorMessage: "",
     };
   },
+  computed: {
+    ...mapGetters(["isLoggedIn"]),
+    // isLoggedIn: {
+    //   get: function () {
+    //     return this.$store.state.isLoggedIn;
+    //   },
+    //   set: function (value) {
+    //     this.$store.state.isLoggedIn = value;
+    //   },
+    // },
+  },
   components: {
     AuthInput,
   },
   methods: {
-    onSubmit() {
+    ...mapActions(["login"]),
+    async onSubmit() {
       try {
-        authFetch
-          .post("/api/auth/signin", {
-            username: this.formData.username,
-            password: this.formData.password,
-          })
-          .then((res) => {
-            alert(res.message);
-            this.$router.go(-1);
-          })
-          .catch((err) => {
-            this.errorMessage = err.message;
-          });
+        const res = await authFetch.post("/api/auth/signin", {
+          username: this.formData.username,
+          password: this.formData.password,
+        });
+
+        if (res.meta.status == 200) {
+          this.login();
+          this.$router.push("/");
+        }
       } catch (error) {
-        this.errorMessage = "Error! Could not reach the API";
+        if (error.status === 500) {
+          this.errorMessage = "Internal Server Error";
+        } else {
+          this.errorMessage = error.message;
+        }
       }
     },
+  },
+  mounted() {
+    if (this.isLoggedIn) {
+      this.$router.push("/");
+    }
   },
 };
 </script>

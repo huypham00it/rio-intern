@@ -7,6 +7,8 @@
         :navigation-enabled="true"
         :pagination-enabled="false"
         :loop="true"
+        :navigationNextLabel="nextBtn"
+        :navigationPrevLabel="prevBtn"
         class="max-w-3xl h-full flex items-center justify-center aspect-square"
       >
         <slide v-for="(img, index) in images" :key="index">
@@ -27,7 +29,12 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      nextBtn:
+        "<span class='text-3xl'><i class='bx bx-chevron-right'></i></span>",
+      prevBtn:
+        "<span class='text-3xl'><i class='bx bx-chevron-left'></i></span>",
+    };
   },
   components: {
     Carousel,

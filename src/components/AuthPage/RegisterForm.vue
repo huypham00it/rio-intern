@@ -134,6 +134,7 @@
 </template>
 <script>
 import { AuthInput } from "@/components/Shared";
+import authFetch from "@/services/axios/interceptors";
 
 export default {
   name: "RegisterForm",
@@ -154,19 +155,34 @@ export default {
     AuthInput,
   },
   methods: {
-    onSubmit() {
-      console.log(this.formData);
+    async onSubmit() {
+      const { username, email, password, firstname, lastname } = this.formData;
+
+      try {
+        const res = await authFetch.post("/api/auth/signup", {
+          username,
+          email,
+          password,
+          fullName: firstname + " " + lastname,
+        });
+
+        if (res.status === 201) {
+          this.$router.push("/auth/login");
+        }
+      } catch (err) {
+        if (err.status >= 500) {
+          this.errorMessage = "Internal Server Error";
+        } else {
+          this.errorMessage = err.message;
+        }
+      }
     },
   },
   watch: {
     confirmPassword(value) {
       if (value != this.formData.password) {
-        console.log(this.formData.password);
         this.errorMessage = "Password doesn't match";
       }
-    },
-    formData() {
-      console.log("test");
     },
   },
 };
