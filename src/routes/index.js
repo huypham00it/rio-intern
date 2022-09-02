@@ -1,4 +1,11 @@
-import { AuthPage, HomePage, NotiPage, JobResult } from "@/pages";
+import {
+  AuthPage,
+  HomePage,
+  NotiPage,
+  JobResult,
+  JobView,
+  TeamsView,
+} from "@/pages";
 import { LoginForm, RegisterForm } from "@/components/AuthPage";
 
 const routes = [
@@ -25,12 +32,19 @@ const routes = [
   },
   {
     path: "/jobs/results",
+    name: "JobResult",
     component: JobResult,
   },
   {
-    path: "/dashboard",
-    component: { template: "<h1>Dashboard</h1>" },
-    meta: { title: "Dashboard" },
+    path: "/jobs/results/:id",
+    name: "JobView",
+    component: JobView,
+  },
+  {
+    path: "/teams",
+    name: "Teams",
+    component: TeamsView,
+    meta: { title: "Teams" },
   },
   {
     path: "/contact",

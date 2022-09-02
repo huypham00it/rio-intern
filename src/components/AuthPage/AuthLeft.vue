@@ -19,25 +19,14 @@ export default {
     return {
       path: "",
       logo: Images.HyperleadLogo,
-      collection: [],
     };
   },
-  computed: {},
-  components: {
-    ImageCarousel,
-  },
-  beforeMount() {
-    this.updateCollection(this.$route.path);
-  },
-  watch: {
-    $route(to) {
-      this.updateCollection(to.path);
-    },
-  },
-  methods: {
-    updateCollection(route) {
-      if (route == "/auth/register") {
-        this.collection = [
+  computed: {
+    collection() {
+      const path = this.$route.path;
+
+      if (path == "/auth/register") {
+        return [
           Images.Buoc1,
           Images.Buoc2,
           Images.Buoc3,
@@ -48,14 +37,12 @@ export default {
           Images.Buoc8,
         ];
       } else {
-        this.collection = [
-          Images.Login1,
-          Images.Login2,
-          Images.Login3,
-          Images.Login4,
-        ];
+        return [Images.Login1, Images.Login2, Images.Login3, Images.Login4];
       }
     },
+  },
+  components: {
+    ImageCarousel,
   },
 };
 </script>

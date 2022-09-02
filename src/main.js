@@ -3,7 +3,11 @@ import VueRouter from "vue-router";
 import VueCarousel from "vue-carousel";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSearch,
+  faAngleDown,
+  faAngleUp,
+} from "@fortawesome/free-solid-svg-icons";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 
 import App from "./App.vue";
@@ -17,11 +21,14 @@ Vue.use(VueCarousel);
 Vue.component("ValidationProvider", ValidationProvider);
 Vue.component("ValidationObserver", ValidationObserver);
 
-library.add(faSearch);
+library.add(faSearch, faAngleDown, faAngleUp);
 
 const router = new VueRouter({
   routes,
   mode: "history",
+  scrollBehavior() {
+    return { x: 0, y: 0, behavior: "smooth" };
+  },
 });
 
 const DEFAULT_TITLE = "Hyperlead";

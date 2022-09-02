@@ -1,3 +1,5 @@
+import { LOGIN, LOGOUT } from "./ActionTypes";
+
 export default {
   namespace: true,
   state: {
@@ -9,18 +11,18 @@ export default {
     },
   },
   actions: {
-    login({ commit }) {
-      commit("login");
+    [LOGIN]({ commit }) {
+      commit(LOGIN);
     },
-    logout({ commit }) {
-      commit("logout");
+    [LOGOUT]({ commit }) {
+      commit(LOGOUT);
     },
   },
   mutations: {
-    login(state) {
+    [LOGIN](state) {
       state.isLoggedIn = true;
     },
-    logout(state) {
+    [LOGOUT](state) {
       state.isLoggedIn = false;
     },
   },

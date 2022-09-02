@@ -1,41 +1,36 @@
 <template>
-  <div>
-    <MainNav v-if="isShowNav" />
+  <div :class="themeMode">
+    <main-nav v-if="isShowNav" />
     <router-view />
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 import MainNav from "@/components/Navigation";
-import { mapGetters, mapActions } from "vuex";
 export default {
   name: "App",
   components: {
     MainNav,
   },
   computed: {
-    ...mapGetters(["isShowNav"]),
-  },
-  methods: {
-    ...mapActions(["hideNav"]),
-  },
-  beforeCreate() {
-    const currentPath = this.$route.path;
-    if (currentPath.indexOf("auth") >= 0) {
-      this.$store.commit("hideNav");
-    } else {
-      this.$store.state.isShowNav = true;
-    }
-  },
-  watch: {
-    $route(to) {
-      if (to.path.indexOf("auth") >= 0) {
-        this.$store.commit("hideNav");
+    ...mapState(["isDarkMode"]),
+    isShowNav() {
+      const currentPath = this.$route.path;
+      return currentPath.indexOf("auth") < 0;
+    },
+    themeMode() {
+      if (this.isDarkMode) {
+        document.querySelector("html").classList.add("dark");
+        return true;
       } else {
-        this.$store.state.isShowNav = true;
+        document.querySelector("html").classList.remove("dark");
+        return false;
       }
     },
   },
+  methods: {},
 };
 </script>
 

@@ -1,6 +1,7 @@
 <template>
   <form
     class="h-12 border border-brand-gray-3 rounded-3xl flex items-center w-full mt-14"
+    @submit.prevent="handleSubmit"
   >
     <font-awesome-icon :icon="['fas', 'search']" class="ml-4 mr-3" />
     <div class="flex items-center w-full justify-between">
@@ -10,6 +11,7 @@
           v-model="role"
           name="role"
           placeholder="Software engineer"
+          data-test="role-input"
         />
       </div>
       <span
@@ -22,35 +24,38 @@
           v-model="location"
           name="location"
           placeholder="Los Angeles"
+          data-test="location-input"
         />
       </div>
       <action-button
         text="Search"
         type="secondary"
         class="rounded-r-3xl"
-        @click.prevent="customNoti"
+        data-test="submit-button"
       />
     </div>
   </form>
 </template>
 <script>
 import { ActionButton, TextInput } from "@/components/Shared";
-
+import { ref } from "vue";
 export default {
   name: "JobSearchForm",
   components: {
     ActionButton,
     TextInput,
   },
-  data() {
-    return {
-      role: "",
-      location: "",
-    };
+  setup() {
+    const role = ref("");
+    const location = ref("");
+    return { role, location };
   },
   methods: {
-    customNoti() {
-      alert(this.role + " " + this.location);
+    handleSubmit() {
+      this.$router.push({
+        name: "JobResult",
+        query: { role: this.role, location: this.location },
+      });
     },
   },
 };

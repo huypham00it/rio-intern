@@ -62,9 +62,13 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 import { AuthInput } from "@/components/Shared";
 import authFetch from "@/services/axios/interceptors";
-import { mapGetters, mapActions } from "vuex";
+import { ActionTypes } from "@/modules";
+
+const { LOGIN } = ActionTypes;
 
 export default {
   name: "RegisterForm",
@@ -76,20 +80,12 @@ export default {
   },
   computed: {
     ...mapGetters(["isLoggedIn"]),
-    // isLoggedIn: {
-    //   get: function () {
-    //     return this.$store.state.isLoggedIn;
-    //   },
-    //   set: function (value) {
-    //     this.$store.state.isLoggedIn = value;
-    //   },
-    // },
   },
   components: {
     AuthInput,
   },
   methods: {
-    ...mapActions(["login"]),
+    ...mapActions([LOGIN]),
     async onSubmit() {
       try {
         const res = await authFetch.post("/api/auth/signin", {

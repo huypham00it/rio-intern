@@ -4,21 +4,23 @@
       <div
         class="flex flex-nowrap h-full px-8 mx-auto border-b border-solid border-brand-gray-1"
       >
-        <router-link to="/">
+        <router-link :to="{ name: 'home' }">
           <a class="flex items-center h-full text-xl">{{ company }}</a>
         </router-link>
 
         <nav class="h-full ml-12">
           <ul class="flex h-full p-0 m-0 list-none">
             <li
-              v-for="navItem in navItems"
-              :key="navItem"
+              v-for="(navItem, index) in navItems"
+              :key="index"
               class="h-full ml-9 first:ml-0"
               data-test="main-nav-list-item"
             >
-              <a href="" class="flex items-center h-full py-2.5">{{
-                navItem
-              }}</a>
+              <router-link
+                :to="navItem.url"
+                class="flex items-center h-full py-2.5"
+                >{{ navItem.text }}</router-link
+              >
             </li>
           </ul>
         </nav>
@@ -34,7 +36,7 @@
             >
               <button
                 class="px-3 hover:bg-brand-gray-2 w-full text-left"
-                @click="logout"
+                @click="LOGOUT"
               >
                 Log out
               </button>
@@ -48,10 +50,14 @@
   </header>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 import { ActionButton } from "@/components/Shared";
 import ProfileImage from "./ProfileImage.vue";
 import SubNav from "./SubNav.vue";
-import { mapGetters, mapActions } from "vuex";
+import { ActionTypes } from "@/modules";
+
+const { LOGOUT } = ActionTypes;
 
 export default {
   name: "MainNav",
@@ -60,12 +66,12 @@ export default {
     return {
       company: "Rio Fintech",
       navItems: [
-        "Teams",
-        "Locations",
-        "Life at Rio Corp",
-        "How we hire",
-        "Students",
-        "Jobs",
+        { text: "Teams", url: "/teams" },
+        { text: "Locations", url: "/" },
+        { text: "Life at Rio Corp", url: "/" },
+        { text: "How we hire", url: "/" },
+        { text: "Students", url: "/" },
+        { text: "Jobs", url: "/jobs/results" },
       ],
     };
   },
@@ -76,7 +82,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["logout"]),
+    ...mapActions([LOGOUT]),
   },
 };
 </script>
