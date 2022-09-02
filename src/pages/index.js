@@ -4,3 +4,4 @@ export { default as NotiPage } from "./NotiPage";
 export { default as JobResult } from "./JobResult";
 export { default as JobView } from "./JobView";
 export { default as TeamsView } from "./TeamsView";
+export { default as Dashboard } from "./Dashboard";

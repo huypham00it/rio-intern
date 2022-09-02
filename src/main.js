@@ -9,17 +9,15 @@ import {
   faAngleUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
+import Vuesax from "vuesax";
+import "vuesax/dist/vuesax.css";
+import "material-icons/iconfont/material-icons.css";
 
 import App from "./App.vue";
 import routes from "./routes";
 import "./assets/tailwind.css";
 import "./validations/vee-validate";
 import store from "./store";
-
-Vue.use(VueRouter);
-Vue.use(VueCarousel);
-Vue.component("ValidationProvider", ValidationProvider);
-Vue.component("ValidationObserver", ValidationObserver);
 
 library.add(faSearch, faAngleDown, faAngleUp);
 
@@ -31,8 +29,24 @@ const router = new VueRouter({
   },
 });
 
-const DEFAULT_TITLE = "Hyperlead";
+Vue.use(VueRouter);
+Vue.use(VueCarousel);
+Vue.component("ValidationProvider", ValidationProvider);
+Vue.component("ValidationObserver", ValidationObserver);
+Vue.use(Vuesax, {
+  theme: {
+    colors: {
+      primary: "#5b3cc4",
+      success: "rgb(23, 201, 100)",
+      danger: "rgb(242, 19, 93)",
+      warning: "rgb(255, 130, 0)",
+      dark: "rgb(36, 33, 69)",
+    },
+  },
+});
+
 router.afterEach((to) => {
+  const DEFAULT_TITLE = "Hyperlead";
   Vue.nextTick(() => {
     document.title = to.meta.title || DEFAULT_TITLE;
   });

@@ -60,3 +60,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.vs-con-input-label.is-label-placeholder {
+  margin-top: 0;
+}
+</style>

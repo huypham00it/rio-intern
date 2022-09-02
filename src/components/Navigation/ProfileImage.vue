@@ -1,9 +1,8 @@
 <template>
-  <img
-    :src="imageLink"
-    alt="avatar"
-    class="w-8 h-8 object-contain rounded-3xl"
-  />
+  <vs-chip>
+    <vs-avatar size="large" :src="imageLink" />
+    Pham Van Huy
+  </vs-chip>
 </template>
 
 <script>

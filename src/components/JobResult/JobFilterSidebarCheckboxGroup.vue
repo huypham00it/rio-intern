@@ -8,16 +8,15 @@
             v-for="(value, index) in uniqueValues"
             :key="index"
           >
-            <input
-              type="checkbox"
-              name=""
-              class="mr-3"
+            <vs-checkbox
+              class="justify-start items-start"
+              color="rgb(38, 187, 174)"
               :id="value"
-              :value="value"
+              :vs-value="value"
               v-model="selectedValues"
               @change="selectValue"
-            />
-            <label :for="value">{{ value }}</label>
+              >{{ value }}</vs-checkbox
+            >
           </li>
         </ul>
       </fieldset>

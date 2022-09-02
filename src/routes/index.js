@@ -5,6 +5,7 @@ import {
   JobResult,
   JobView,
   TeamsView,
+  Dashboard,
 } from "@/pages";
 import { LoginForm, RegisterForm } from "@/components/AuthPage";
 
@@ -47,9 +48,9 @@ const routes = [
     meta: { title: "Teams" },
   },
   {
-    path: "/contact",
-    component: { template: "<h1>Contact</h1>" },
-    meta: { title: "Contact" },
+    path: "/dashboard",
+    component: Dashboard,
+    meta: { title: "dashboard" },
   },
   {
     path: "/notices",
