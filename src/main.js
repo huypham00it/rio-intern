@@ -12,6 +12,7 @@ import { ValidationObserver, ValidationProvider } from "vee-validate";
 import Vuesax from "vuesax";
 import "vuesax/dist/vuesax.css";
 import "material-icons/iconfont/material-icons.css";
+import HighchartsVue from "highcharts-vue";
 
 import App from "./App.vue";
 import routes from "./routes";
@@ -29,6 +30,7 @@ const router = new VueRouter({
   },
 });
 
+Vue.use(HighchartsVue);
 Vue.use(VueRouter);
 Vue.use(VueCarousel);
 Vue.component("ValidationProvider", ValidationProvider);

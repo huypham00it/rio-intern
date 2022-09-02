@@ -8,6 +8,8 @@ import {
   Dashboard,
 } from "@/pages";
 import { LoginForm, RegisterForm } from "@/components/AuthPage";
+import { LineChart, AreaChart, BarChart, PieChart } from "@/components/Chart";
+import { Customer } from "@/components/Dashboard";
 
 const routes = [
   {
@@ -50,6 +52,33 @@ const routes = [
   {
     path: "/dashboard",
     component: Dashboard,
+    children: [
+      {
+        path: "line",
+        component: LineChart,
+        meta: { title: "Line" },
+      },
+      {
+        path: "area",
+        component: AreaChart,
+        meta: { title: "Area" },
+      },
+      {
+        path: "bar",
+        component: BarChart,
+        meta: { title: "Bar" },
+      },
+      {
+        path: "pie",
+        component: PieChart,
+        meta: { title: "Pie" },
+      },
+      {
+        path: "customers",
+        component: Customer,
+        meta: { title: "Customer" },
+      },
+    ],
     meta: { title: "dashboard" },
   },
   {
