@@ -1,8 +1,12 @@
 <template>
-  <div>Customers</div>
+  <div>
+    <advanced />
+  </div>
 </template>
 <script>
+import Advanced from "./dataTable/Advanced";
 export default {
-  name: "Customers",
+  name: "Customer",
+  components: { Advanced },
 };
 </script>

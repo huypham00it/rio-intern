@@ -13,6 +13,7 @@ import Vuesax from "vuesax";
 import "vuesax/dist/vuesax.css";
 import "material-icons/iconfont/material-icons.css";
 import HighchartsVue from "highcharts-vue";
+import Datatable from "vue2-datatable-component";
 
 import App from "./App.vue";
 import routes from "./routes";
@@ -30,6 +31,7 @@ const router = new VueRouter({
   },
 });
 
+Vue.use(Datatable);
 Vue.use(HighchartsVue);
 Vue.use(VueRouter);
 Vue.use(VueCarousel);
