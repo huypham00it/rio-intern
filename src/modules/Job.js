@@ -1,4 +1,4 @@
-import getJobs from "@/api/getJobs";
+import { getJobs } from "@/api";
 import {
   RECEIVE_JOBS,
   FETCH_JOBS,

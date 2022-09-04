@@ -16,10 +16,10 @@
       @input="handleInput"
     />
     <span
-      v-if="errors.length > 0"
+      v-if="errors.length > 0 && hasValue"
       class="text-sm text-red-500 first-letter:capitalize"
     >
-      {{ errors[0] }}</span
+      {{ errors[0].charAt(0).toUpperCase() + errors[0].slice(1) }}</span
     >
   </div>
 </template>
@@ -51,6 +51,14 @@ export default {
     return {
       focus: false,
     };
+  },
+  computed: {
+    hasValue() {
+      if (this.value.length === 0) {
+        return false;
+      }
+      return true;
+    },
   },
   methods: {
     handleInput($event) {

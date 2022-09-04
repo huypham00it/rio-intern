@@ -1,4 +1,4 @@
-import getSpotlights from "@/api/getSpotlights";
+import { getSpotlights } from "@/api";
 import { RECEIVE_SPOTLIGHTS, FETCH_SPOTLIGHTS } from "./ActionTypes";
 
 export default {

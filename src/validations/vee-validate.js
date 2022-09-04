@@ -77,7 +77,7 @@ extend(
       if (value.indexOf(" ") >= 0) {
         return "Username cannot contain white space characters";
       } else if (value.length < 8) {
-        return "Password has at least 8 characters";
+        return "Username has at least 8 characters";
       }
 
       return true;

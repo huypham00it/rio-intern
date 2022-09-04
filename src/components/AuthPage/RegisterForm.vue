@@ -45,7 +45,7 @@
         <div>
           <ValidationProvider
             name="username"
-            rules="required|min:8"
+            rules="onlyUsernameRequired|required"
             v-slot="{ errors }"
             class="flex-1"
           >
@@ -105,6 +105,11 @@
               placeholder="Confirm Password"
               :errors="errors"
             />
+            <span
+              class="text-red-500 text-sm"
+              v-if="!isMatchPassword && errors.length === 0"
+              >Password doesn't match</span
+            >
           </ValidationProvider>
         </div>
         <div class="mt-4 text-center">
@@ -134,7 +139,7 @@
 </template>
 <script>
 import { AuthInput } from "@/components/Shared";
-import authFetch from "@/services/axios/interceptors";
+import axios from "axios";
 
 export default {
   name: "RegisterForm",
@@ -149,39 +154,59 @@ export default {
       },
       confirmPassword: "",
       errorMessage: "",
+      isConfirmTouched: false,
     };
   },
   components: {
     AuthInput,
+  },
+  computed: {
+    isMatchPassword() {
+      if (this.confirmPassword.length === 0) return true;
+      return (
+        this.confirmPassword.length > 0 &&
+        this.confirmPassword === this.formData.password
+      );
+    },
   },
   methods: {
     async onSubmit() {
       const { username, email, password, firstname, lastname } = this.formData;
 
       try {
-        const res = await authFetch.post("/api/auth/signup", {
-          username,
-          email,
-          password,
-          fullName: firstname + " " + lastname,
-        });
-
-        if (res.status === 201) {
+        const { data } = await axios.post(
+          process.env.VUE_APP_API_URL + "/api/auth/signup",
+          {
+            username,
+            email,
+            password,
+            fullName: firstname + " " + lastname,
+          }
+        );
+        if (data.code === 201) {
+          this.$vs.notify({
+            title: data.status,
+            text: data.message,
+            color: "success",
+            position: "top-right",
+            icon: "verified_user",
+          });
           this.$router.push("/auth/login");
         }
-      } catch (err) {
-        if (err.status >= 500) {
+      } catch (error) {
+        if (error.status >= 500) {
           this.errorMessage = "Internal Server Error";
         } else {
-          this.errorMessage = err.message;
+          const data = error.response.data;
+          this.$vs.notify({
+            title: data.status,
+            text: data.message,
+            color: "warning",
+            position: "top-right",
+            time: 4000,
+            icon: "sms_failed",
+          });
         }
-      }
-    },
-  },
-  watch: {
-    confirmPassword(value) {
-      if (value != this.formData.password) {
-        this.errorMessage = "Password doesn't match";
       }
     },
   },

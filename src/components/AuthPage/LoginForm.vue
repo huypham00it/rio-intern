@@ -112,7 +112,7 @@ export default {
     },
   },
   mounted() {
-    if (this.isLoggedIn) {
+    if (this[IS_LOGGED_IN]) {
       this.$router.push("/");
     }
   },

@@ -10,33 +10,22 @@
   </ul>
 </template>
 <script>
-// import { mapState, mapActions } from "vuex";
 import { ref, onMounted } from "vue";
 
-// import { ActionTypes } from "@/modules";
-
-import authFetch from "@/services/axios/interceptors";
-
-// const { FETCH_SPOTLIGHTS } = ActionTypes;
+import axios from "axios";
 
 export default {
   name: "Spotlight",
   setup() {
     const spotlights = ref([]);
     const getSpotlights = async () => {
-      spotlights.value = await authFetch.get("/spotlights");
+      const { data } = await axios.get(
+        process.env.VUE_APP_API_URL + "/spotlights"
+      );
+      spotlights.value = data;
     };
     onMounted(getSpotlights);
     return { spotlights };
   },
-  // computed: {
-  //   ...mapState("spotlight", ["spotlights"]),
-  // },
-  // mounted() {
-  //   this[`spotlight/${FETCH_SPOTLIGHTS}`]();
-  // },
-  // methods: {
-  //   ...mapActions([`spotlight/${FETCH_SPOTLIGHTS}`]),
-  // },
 };
 </script>
