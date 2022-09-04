@@ -7,12 +7,15 @@ const authFetch = axios.create({
 authFetch.interceptors.request.use(
   (request) => {
     request.headers.common["Accept"] = "application/json";
-    const token = JSON.parse(localStorage.getItem("user")).accessToken || "";
-    request.headers.Authorization = `Bearer ${token}`;
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      const token = user.accessToken || "";
+      request.headers.Authorization = `Bearer ${token}`;
+    }
     return request;
   },
   (error) => {
-    return Promise.reject(error);
+    return error;
   }
 );
 
@@ -25,7 +28,7 @@ authFetch.interceptors.response.use(
     if (error.response.status === 404) {
       console.log("NOT FOUND");
     }
-    return Promise.reject(error.response.data);
+    return error.response;
   }
 );
 

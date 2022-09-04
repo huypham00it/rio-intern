@@ -175,7 +175,7 @@ export default {
 
       try {
         const { data } = await axios.post(
-          process.env.VUE_APP_API_URL + "/api/auth/signup",
+          process.env.VUE_APP_API_URL + "/auth/signup",
           {
             username,
             email,

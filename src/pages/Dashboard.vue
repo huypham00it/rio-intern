@@ -62,11 +62,26 @@
 </template>
 
 <script>
+import authFetch from "@/services/authFetch";
+
 export default {
   name: "Dashboard",
   data: () => ({
     active: false,
   }),
+  async mounted() {
+    const res = await authFetch.get(
+      process.env.VUE_APP_API_URL + "/test/admin"
+    );
+    if (res.status === 401) {
+      alert("Vui long dang nhap lai");
+      localStorage.clear();
+      location.href = "http://localhost:3000/auth/signin";
+    }
+    if (res.status === 403) {
+      this.$router.push("/403");
+    }
+  },
 };
 </script>
 

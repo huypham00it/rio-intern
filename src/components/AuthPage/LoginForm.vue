@@ -89,7 +89,7 @@ export default {
     async onSubmit() {
       try {
         const { data } = await axios.post(
-          process.env.VUE_APP_API_URL + "/api/auth/signin",
+          process.env.VUE_APP_API_URL + "/auth/signin",
           {
             username: this.formData.username,
             password: this.formData.password,

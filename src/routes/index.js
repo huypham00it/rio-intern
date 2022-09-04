@@ -108,7 +108,15 @@ const routes = [
   },
   {
     path: "*",
-    redirect: "/",
+    meta: { title: "Not found" },
+    component: { template: "<h1>Not found</h1>" },
+  },
+  {
+    path: "/403",
+    meta: { title: "Forbidden" },
+    component: {
+      template: "<h1>You don't have permission to access on this server</h1>",
+    },
   },
 ];
 export default routes;
