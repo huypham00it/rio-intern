@@ -1,11 +1,12 @@
 <template>
   <vs-chip>
     <vs-avatar size="large" :src="imageLink" />
-    Pham Van Huy
+    {{ user.fullName }}
   </vs-chip>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { Avatar } from "@/images";
 export default {
   name: "ProfileImage",
@@ -13,6 +14,9 @@ export default {
     return {
       imageLink: Avatar,
     };
+  },
+  computed: {
+    ...mapGetters("user", ["user"]),
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <header :class="['w-full', 'text-sm', headerHeightClass]">
+  <header class="'w-full', 'text-sm'" :class="headerHeightClass">
     <div class="fixed z-10 top-0 left-0 w-full h-16 bg-white bg-light">
       <div
         class="flex flex-nowrap h-full px-8 mx-auto border-b border-solid border-brand-gray-1"
@@ -26,33 +26,27 @@
         </nav>
 
         <div class="flex h-full items-center ml-auto">
-          <router-link v-if="!isLoggedIn" to="/auth/login">
+          <router-link v-if="!IS_LOGGED_IN" to="/auth/login">
             <action-button data-test="login-button" text="Sign in" />
           </router-link>
           <div v-else class="relative user-avatar">
             <profile-image data-test="profile-image"></profile-image>
             <div
-              class="absolute right-0 top-6 rounded-md py-3 bg-brand-gray-1 w-32 hidden"
+              class="absolute right-0 top-6 rounded-md bg-brand-gray-1 w-32 hidden"
             >
               <vs-button
                 line-position="top"
                 class="w-full"
                 type="line"
-                @click="LOGOUT"
+                @click="logout"
                 >Log out</vs-button
               >
-              <!-- <button
-                class="px-3 hover:bg-brand-gray-2 w-full text-left"
-                
-              >
-                Log out
-              </button> -->
             </div>
           </div>
         </div>
       </div>
 
-      <sub-nav v-if="isLoggedIn" data-test="sub-nav" />
+      <sub-nav v-if="IS_LOGGED_IN" data-test="sub-nav" />
     </div>
   </header>
 </template>
@@ -64,7 +58,7 @@ import ProfileImage from "./ProfileImage.vue";
 import SubNav from "./SubNav.vue";
 import { ActionTypes } from "@/modules";
 
-const { LOGOUT } = ActionTypes;
+const { LOGOUT, IS_LOGGED_IN } = ActionTypes;
 
 export default {
   name: "MainNav",
@@ -75,7 +69,7 @@ export default {
       navItems: [
         { text: "Teams", url: "/teams" },
         { text: "Locations", url: "/dashboard" },
-        { text: "Life at Rio Corp", url: "/" },
+        { text: "Life at Rio Corp", url: "/life" },
         { text: "How we hire", url: "/" },
         { text: "Students", url: "/" },
         { text: "Jobs", url: "/jobs/results" },
@@ -83,13 +77,16 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isLoggedIn"]),
+    ...mapGetters("user", [IS_LOGGED_IN]),
     headerHeightClass() {
-      return this.isLoggedIn ? "h-32" : "h-16";
+      return this[IS_LOGGED_IN] ? "h-32" : "h-16";
     },
   },
   methods: {
-    ...mapActions([LOGOUT]),
+    ...mapActions([`user/${LOGOUT}`]),
+    logout() {
+      this[`user/${LOGOUT}`]();
+    },
   },
 };
 </script>

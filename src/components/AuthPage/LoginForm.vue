@@ -63,12 +63,12 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
 
 import { AuthInput } from "@/components/Shared";
-import authFetch from "@/services/axios/interceptors";
 import { ActionTypes } from "@/modules";
 
-const { LOGIN } = ActionTypes;
+const { LOGIN, IS_LOGGED_IN } = ActionTypes;
 
 export default {
   name: "RegisterForm",
@@ -79,25 +79,30 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isLoggedIn"]),
+    ...mapGetters("user", [IS_LOGGED_IN]),
   },
   components: {
     AuthInput,
   },
   methods: {
-    ...mapActions([LOGIN]),
+    ...mapActions([`user/${LOGIN}`]),
     async onSubmit() {
       try {
-        const res = await authFetch.post("/api/auth/signin", {
-          username: this.formData.username,
-          password: this.formData.password,
-        });
+        const { data } = await axios.post(
+          process.env.VUE_APP_API_URL + "/api/auth/signin",
+          {
+            username: this.formData.username,
+            password: this.formData.password,
+          }
+        );
 
-        if (res.meta.status == 200) {
-          this.login();
+        if (data.accessToken) {
+          localStorage.setItem("user", JSON.stringify(data));
+          this[`user/${LOGIN}`](data);
           this.$router.push("/");
         }
-      } catch (error) {
+      } catch ({ response }) {
+        const error = response.data;
         if (error.status === 500) {
           this.errorMessage = "Internal Server Error";
         } else {

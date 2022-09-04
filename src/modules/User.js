@@ -1,29 +1,37 @@
-import { LOGIN, LOGOUT } from "./ActionTypes";
+import { LOGIN, LOGOUT, IS_LOGGED_IN } from "./ActionTypes";
+
+const user = JSON.parse(localStorage.getItem("user")) || null;
 
 export default {
-  namespace: true,
+  namespaced: true,
   state: {
-    isLoggedIn: false,
+    [IS_LOGGED_IN]: user ? true : false,
+    user: user,
   },
   getters: {
-    isLoggedIn(state) {
-      return state.isLoggedIn;
+    [IS_LOGGED_IN](state) {
+      return state.IS_LOGGED_IN;
+    },
+    user(state) {
+      return state.user;
     },
   },
   actions: {
-    [LOGIN]({ commit }) {
-      commit(LOGIN);
+    [LOGIN]({ commit }, user) {
+      commit(LOGIN, user);
     },
     [LOGOUT]({ commit }) {
+      localStorage.clear();
       commit(LOGOUT);
     },
   },
   mutations: {
-    [LOGIN](state) {
-      state.isLoggedIn = true;
+    [LOGIN](state, user) {
+      state.user = user;
+      state.IS_LOGGED_IN = true;
     },
     [LOGOUT](state) {
-      state.isLoggedIn = false;
+      state.IS_LOGGED_IN = false;
     },
   },
 };

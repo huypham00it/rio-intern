@@ -9,7 +9,7 @@ import {
 } from "@/pages";
 import { LoginForm, RegisterForm } from "@/components/AuthPage";
 import { LineChart, AreaChart, BarChart, PieChart } from "@/components/Chart";
-import { Customer } from "@/components/Dashboard";
+import { Customer, Calendar, Editor } from "@/components/Dashboard";
 
 const routes = [
   {
@@ -78,6 +78,16 @@ const routes = [
         component: Customer,
         meta: { title: "Customer" },
       },
+      {
+        path: "calendar",
+        component: Calendar,
+        meta: { title: "Calendar" },
+      },
+      {
+        path: "editor",
+        component: Editor,
+        meta: { title: "Editor" },
+      },
     ],
     meta: { title: "dashboard" },
   },
@@ -98,7 +108,7 @@ const routes = [
   },
   {
     path: "*",
-    component: { template: "<h1>Not found</h1>" },
+    redirect: "/",
   },
 ];
 export default routes;

@@ -18,6 +18,7 @@ import Datatable from "vue2-datatable-component";
 import App from "./App.vue";
 import routes from "./routes";
 import "./assets/tailwind.css";
+import "./assets/style.css";
 import "./validations/vee-validate";
 import store from "./store";
 
