@@ -21,7 +21,6 @@ export default {
       commit(LOGIN, user);
     },
     [LOGOUT]({ commit }) {
-      localStorage.clear();
       commit(LOGOUT);
     },
   },
@@ -31,7 +30,9 @@ export default {
       state.IS_LOGGED_IN = true;
     },
     [LOGOUT](state) {
+      localStorage.clear();
       state.IS_LOGGED_IN = false;
+      state.user = null;
     },
   },
 };

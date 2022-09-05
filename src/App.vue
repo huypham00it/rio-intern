@@ -1,7 +1,12 @@
 <template>
   <div :class="themeMode">
     <main-nav v-if="isShowNav" />
-    <router-view />
+    <transition
+      enter-active-class="animated fadeInRight"
+      leave-active-class="animated fadeOutLeft"
+    >
+      <router-view />
+    </transition>
   </div>
 </template>
 

@@ -28,7 +28,6 @@ export default {
   },
   async mounted() {
     const response = await authFetch.get("/test/all");
-    console.log(response);
     if (!response.status) {
       this.content = response;
     }

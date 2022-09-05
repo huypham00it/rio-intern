@@ -1,8 +1,9 @@
 <template lang="html">
-  <div id="parentx">
+  <div id="parentx" v-if="show">
     <vs-button @click="active = !active" color="primary" type="filled"
       >Open Sidebar</vs-button
     >
+    <h1>{{ content }}</h1>
     <router-view />
     <vs-sidebar
       parent="body"
@@ -62,25 +63,49 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import authFetch from "@/services/authFetch";
+import { ActionTypes } from "@/modules";
+
+const { LOGOUT } = ActionTypes;
 
 export default {
   name: "Dashboard",
   data: () => ({
     active: false,
+    show: false,
+    content: "",
   }),
+  computed: {},
   async mounted() {
     const res = await authFetch.get(
       process.env.VUE_APP_API_URL + "/test/admin"
     );
     if (res.status === 401) {
-      alert("Vui long dang nhap lai");
-      localStorage.clear();
-      location.href = "http://localhost:3000/auth/signin";
+      this.$vs.dialog({
+        type: "confirm",
+        color: "warning",
+        title: `Unauthorized`,
+        text: "Please login again to access on this server",
+        accept: this.acceptAlert,
+        cancel: this.cancelAlert,
+      });
+    } else if (res.status === 403) {
+      return this.$router.push("/403");
+    } else {
+      this.show = true;
+      this.content = res;
     }
-    if (res.status === 403) {
-      this.$router.push("/403");
-    }
+  },
+  methods: {
+    ...mapActions([`user/${LOGOUT}`]),
+    acceptAlert() {
+      this[`user/${LOGOUT}`]();
+      this.$router.push("/auth/login");
+    },
+    cancelAlert() {
+      this.$router.push("/");
+    },
   },
 };
 </script>
