@@ -92,14 +92,9 @@ const routes = [
     meta: { title: "dashboard" },
   },
   {
-    path: "/notices",
+    path: "/life",
     component: NotiPage,
     meta: { title: "Notices" },
-  },
-  {
-    path: "/balance",
-    component: { template: "<h1>Balance</h1>" },
-    meta: { title: "Balance" },
   },
   {
     path: "/loans",
